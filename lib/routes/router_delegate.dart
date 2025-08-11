@@ -54,7 +54,6 @@ class AppRouterDelegate extends RouterDelegate<PageConfiguration>
       key: navigatorKey,
       pages: _pageStack.map((config) => _buildPage(config)).toList(),
       // onDidRemovePage: (page) {
-      //   // Remove the last configuration from the stack when a page is removed
       //   if (_pageStack.isNotEmpty) {
       //     _pageStack.removeLast();
       //     _currentConfiguration = _pageStack.isNotEmpty ? _pageStack.last : null;
