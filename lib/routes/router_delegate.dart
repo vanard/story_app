@@ -53,13 +53,6 @@ class AppRouterDelegate extends RouterDelegate<PageConfiguration>
     return Navigator(
       key: navigatorKey,
       pages: _pageStack.map((config) => _buildPage(config)).toList(),
-      // onDidRemovePage: (page) {
-      //   if (_pageStack.isNotEmpty) {
-      //     _pageStack.removeLast();
-      //     _currentConfiguration = _pageStack.isNotEmpty ? _pageStack.last : null;
-      //     notifyListeners();
-      //   }
-      // },
     );
   }
 
