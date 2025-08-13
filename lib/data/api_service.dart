@@ -3,7 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
-import 'package:story_app/exception_helper.dart';
+import 'package:story_app/util/exception_helper.dart';
 
 class ApiService {
   static const _baseUrl = 'https://story-api.dicoding.dev/v1';

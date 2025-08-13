@@ -1,20 +1,6 @@
+import 'package:flutter/foundation.dart';
+
 enum PageName { splash, home, login, register, detailStory, addNewStory }
-
-// sealed class PageConfiguration {
-//   final PageName? pageName;
-
-//   PageConfiguration.home() : pageName = PageName.home;
-
-//   PageConfiguration.login() : pageName = PageName.login;
-
-//   PageConfiguration.register() : pageName = PageName.register;
-
-//   PageConfiguration.detailStory(String id) : pageName = PageName.detailStory, storyId = id;
-
-//   PageConfiguration.addNewStory() : pageName = PageName.addNewStory;
-
-//   const PageConfiguration({this.pageName});
-// }
 
 sealed class PageConfiguration {
   final PageName? pageName;
@@ -23,9 +9,10 @@ sealed class PageConfiguration {
 
   const PageConfiguration({this.pageName});
 
-  // Helper method to parse route information
   static PageConfiguration fromRoute(Uri uri) {
+    debugPrint('Parsing route from URI: $uri');
     switch (uri.path) {
+      case '/':
       case '/splash':
         return SplashPageConfiguration();
       case '/login':

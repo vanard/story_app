@@ -36,7 +36,8 @@ class _MyAppState extends State<MyApp> {
     final authRepository = AuthRepository(service: apiService);
     _authProvider = AuthProvider(authRepository: authRepository);
 
-    _appRouterDelegate = AppRouterDelegate(authRepository: authRepository);
+    // _appRouterDelegate = AppRouterDelegate(authRepository: authRepository);
+    _appRouterDelegate = AppRouterDelegate();
     _appRouteInformationParser = AppRouteInformationParser();
   }
 

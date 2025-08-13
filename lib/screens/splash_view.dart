@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:story_app/screens/auth_view.dart';
+import 'package:provider/provider.dart';
+import 'package:story_app/db/auth_repository.dart';
+import 'package:story_app/providers/auth_provider.dart';
 
 class SplashScreen extends StatefulWidget {
-  const SplashScreen({super.key});
+  const SplashScreen({super.key, required this.onAuthCheckComplete});
+
+  final void Function(bool isLoggedIn)? onAuthCheckComplete;
 
   @override
   State<SplashScreen> createState() => _SplashScreenState();
@@ -12,18 +16,17 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    // Simulate a time-consuming task (e.g., loading data) for the splash screen.
-    // Replace this with your actual data loading logic.
-    Future.delayed(Duration(seconds: 2), () {
-      if (!context.mounted) {
-        return;
-      }
+    _checkAuthStatus();
+  }
 
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => AuthScreen()),
-      );
-    });
+  Future<void> _checkAuthStatus() async {
+    final isLoggedIn = await Provider.of<AuthProvider>(
+      context,
+      listen: false,
+    ).checkLoginStatus();
+    if (widget.onAuthCheckComplete != null) {
+      widget.onAuthCheckComplete!(isLoggedIn);
+    }
   }
 
   @override
@@ -35,7 +38,9 @@ class _SplashScreenState extends State<SplashScreen> {
           children: <Widget>[
             FlutterLogo(size: 100.0),
             SizedBox(height: 16.0),
-            Text('Your Nursery App'),
+            Text('Story App', style: Theme.of(context).textTheme.titleLarge),
+            SizedBox(height: 16.0),
+            CircularProgressIndicator(),
           ],
         ),
       ),

@@ -14,7 +14,7 @@ class AuthProvider extends ChangeNotifier {
   bool get isLoggedIn => _isLoggedIn;
   String get errorMessage => _errorMessage;
 
-  Future<void> checkLoginStatus() async {
+  Future<bool> checkLoginStatus() async {
     _isLoading = true;
     notifyListeners();
     try {
@@ -33,6 +33,8 @@ class AuthProvider extends ChangeNotifier {
       _isLoading = false;
       notifyListeners();
     }
+
+    return _isLoggedIn;
   }
 
   Future<void> login(String email, String password) async {
