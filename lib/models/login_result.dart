@@ -10,6 +10,27 @@ class LoginResponse {
     required this.message,
     required this.loginResult,
   });
+
+  Map<String, dynamic> toMap() {
+    return {
+      'error': error,
+      'message': message,
+      'loginResult': loginResult.toMap(),
+    };
+  }
+
+  factory LoginResponse.fromMap(Map<String, dynamic> map) {
+    return LoginResponse(
+      error: map['error'] ?? false,
+      message: map['message'] ?? '',
+      loginResult: LoginResult.fromMap(map['loginResult']),
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory LoginResponse.fromJson(String source) =>
+      LoginResponse.fromMap(json.decode(source));
 }
 
 class LoginResult {

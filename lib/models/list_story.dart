@@ -1,31 +1,38 @@
+import 'dart:convert';
+
+import 'package:story_app/models/story.dart';
+
 class ListStoryResponse {
   final bool error;
   final String message;
-  final List<ListStory> listStory;
+  final List<Story> listStory;
 
   ListStoryResponse({
     required this.error,
     required this.message,
     required this.listStory,
   });
-}
 
-class ListStory {
-  final String id;
-  final String name;
-  final String description;
-  final String photoUrl;
-  final DateTime createdAt;
-  final double lat;
-  final double lon;
+  Map<String, dynamic> toMap() {
+    return {
+      'error': error,
+      'message': message,
+      'listStory': listStory.map((x) => x.toMap()).toList(),
+    };
+  }
 
-  ListStory({
-    required this.id,
-    required this.name,
-    required this.description,
-    required this.photoUrl,
-    required this.createdAt,
-    required this.lat,
-    required this.lon,
-  });
+  factory ListStoryResponse.fromMap(Map<String, dynamic> map) {
+    return ListStoryResponse(
+      error: map['error'] ?? false,
+      message: map['message'] ?? '',
+      listStory: List<Story>.from(
+        map['listStory']?.map((x) => Story.fromMap(x)) ?? [],
+      ),
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory ListStoryResponse.fromJson(String source) =>
+      ListStoryResponse.fromMap(json.decode(source));
 }

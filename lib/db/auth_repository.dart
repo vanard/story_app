@@ -10,7 +10,7 @@ class AuthRepository {
 
   late final ApiService _apiService;
 
-  AuthRepository({required ApiService service});
+  AuthRepository({required ApiService service}) : _apiService = service;
 
   Future<bool> isLoggedIn() async {
     final preferences = await SharedPreferences.getInstance();
@@ -20,6 +20,10 @@ class AuthRepository {
   Future<bool> login(String email, String pass) async {
     final result = await _apiService.loginUser(email, pass);
     debugPrint('Login result: $result');
+    // TODO mapper
+    final resData = LoginResponse.fromMap(result);
+    await saveLoginUser(resData.loginResult);
+
     final preferences = await SharedPreferences.getInstance();
     return preferences.setBool(authKey, true);
   }
@@ -27,7 +31,7 @@ class AuthRepository {
   Future<bool> logout() async {
     debugPrint('Logout');
     final preferences = await SharedPreferences.getInstance();
-    
+
     final loginUser = await getLoginUser();
     if (loginUser != null) {
       await deleteLoginUser(loginUser);
@@ -39,13 +43,12 @@ class AuthRepository {
   Future<void> register(String name, String email, String pass) async {
     final result = await _apiService.registerUser(name, email, pass);
     final resData = BaseResponse.fromJson(result);
-    debugPrint('Login result: $result');
+    // debugPrint('Login result: $result');
     debugPrint('Login result: ${resData.message}');
-    // final preferences = await SharedPreferences.getInstance();
-    // return preferences.setBool(authKey, true);
   }
 
   Future<bool> saveLoginUser(LoginResult loginUser) async {
+    debugPrint('Saving login user: ${loginUser.toJson()}');
     final preferences = await SharedPreferences.getInstance();
     return preferences.setString(loginUserKey, loginUser.toJson());
   }
@@ -58,6 +61,7 @@ class AuthRepository {
   Future<LoginResult?> getLoginUser() async {
     final preferences = await SharedPreferences.getInstance();
     final jsonString = preferences.getString(loginUserKey);
+    debugPrint('Login user: $jsonString');
     if (jsonString != null && jsonString.isNotEmpty) {
       return LoginResult.fromJson(jsonString);
     }
