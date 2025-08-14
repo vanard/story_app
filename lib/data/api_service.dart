@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
+import 'package:story_app/models/response.dart';
 import 'package:story_app/util/exception_helper.dart';
 
 class ApiService {
@@ -24,16 +25,17 @@ class ApiService {
     try {
       final response = await _client.post(
         Uri.parse('$_baseUrl/register'),
-        // headers: <String, String>{'Content-Type': 'application/json'},
+        headers: <String, String>{'Content-Type': 'application/json'},
         body: jsonEncode(user),
       );
       debugPrint(response.body);
       debugPrint('status code: ${response.statusCode}');
 
-      if (response.statusCode == 200) {
+      if (response.statusCode == 201) {
         return jsonDecode(response.body) as Map<String, dynamic>;
       } else {
-        throw handleError(response.statusCode);
+        final errorResponse = BaseResponse.fromJson(jsonDecode(response.body));
+        throw handleError(response.statusCode, errorResponse);
       }
     } catch (e) {
       throw handleException(e);
@@ -46,7 +48,7 @@ class ApiService {
     try {
       final response = await _client.post(
         Uri.parse('$_baseUrl/login'),
-        // headers: <String, String>{'Content-Type': 'application/json'},
+        headers: <String, String>{'Content-Type': 'application/json'},
         body: jsonEncode(user),
       );
       debugPrint(response.body);
@@ -55,7 +57,8 @@ class ApiService {
       if (response.statusCode == 200) {
         return jsonDecode(response.body) as Map<String, dynamic>;
       } else {
-        throw handleError(response.statusCode);
+        final errorResponse = BaseResponse.fromJson(jsonDecode(response.body));
+        throw handleError(response.statusCode, errorResponse);
       }
     } catch (e) {
       throw handleException(e);
@@ -84,10 +87,11 @@ class ApiService {
       debugPrint(response.body);
       debugPrint('status code: ${response.statusCode}');
 
-      if (response.statusCode == 200) {
+      if (response.statusCode == 201) {
         return jsonDecode(response.body) as Map<String, dynamic>;
       } else {
-        throw handleError(response.statusCode);
+        final errorResponse = BaseResponse.fromJson(jsonDecode(response.body));
+        throw handleError(response.statusCode, errorResponse);
       }
     } catch (e) {
       throw handleException(e);
@@ -113,7 +117,8 @@ class ApiService {
       if (response.statusCode == 200) {
         return jsonDecode(response.body) as Map<String, dynamic>;
       } else {
-        throw handleError(response.statusCode);
+        final errorResponse = BaseResponse.fromJson(jsonDecode(response.body));
+        throw handleError(response.statusCode, errorResponse);
       }
     } catch (e) {
       throw handleException(e);
@@ -132,7 +137,8 @@ class ApiService {
       if (response.statusCode == 200) {
         return jsonDecode(response.body) as Map<String, dynamic>;
       } else {
-        throw handleError(response.statusCode);
+        final errorResponse = BaseResponse.fromJson(jsonDecode(response.body));
+        throw handleError(response.statusCode, errorResponse);
       }
     } catch (e) {
       throw handleException(e);

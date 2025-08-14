@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:story_app/db/auth_repository.dart';
 import 'package:story_app/providers/auth_provider.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -16,7 +15,9 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    _checkAuthStatus();
+    Future.microtask(() async {
+      await _checkAuthStatus();
+    });
   }
 
   Future<void> _checkAuthStatus() async {
