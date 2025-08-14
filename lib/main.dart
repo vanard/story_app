@@ -3,6 +3,8 @@ import 'package:story_app/data/api_service.dart';
 import 'package:story_app/db/auth_repository.dart';
 import 'package:story_app/l10n/app_localizations.dart';
 import 'package:story_app/providers/auth_provider.dart';
+import 'package:story_app/providers/main_provider.dart';
+import 'package:story_app/providers/stories_provider.dart';
 import 'package:story_app/routes/router_delegate.dart';
 import 'package:story_app/routes/router_info_parser.dart';
 import 'package:story_app/util/theme.dart';
@@ -28,6 +30,7 @@ class _MyAppState extends State<MyApp> {
   late final AppRouterDelegate _appRouterDelegate;
   late final AppRouteInformationParser _appRouteInformationParser;
   late final AuthProvider _authProvider;
+  late final StoriesProvider _storiesProvider;
 
   @override
   void initState() {
@@ -35,6 +38,7 @@ class _MyAppState extends State<MyApp> {
     final apiService = ApiService();
     final authRepository = AuthRepository(service: apiService);
     _authProvider = AuthProvider(authRepository: authRepository);
+    _storiesProvider = StoriesProvider(service: apiService);
 
     // _appRouterDelegate = AppRouterDelegate(authRepository: authRepository);
     _appRouterDelegate = AppRouterDelegate();
@@ -50,7 +54,18 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [ChangeNotifierProvider(create: (context) => _authProvider)],
+      providers: [
+        // Provider(create: (_) => ApiService()),
+        // Provider(create: (_) => AuthRepository(service: ApiService())),
+        ChangeNotifierProvider(
+          // create: (context) => AuthProvider(
+          //   authRepository: Provider.of<AuthRepository>(context, listen: false),
+          // ),
+          create: (context) => _authProvider,
+        ),
+        ChangeNotifierProvider(create: (context) => _storiesProvider),
+        ChangeNotifierProvider(create: (context) => MainProvider()),
+      ],
       child: MaterialApp.router(
         theme: lightTheme.copyWith(
           textTheme: baseTextTheme(context, lightTheme),
