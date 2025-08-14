@@ -116,11 +116,143 @@ abstract class AppLocalizations {
   /// **'Register'**
   String get registerButton;
 
+  /// No description provided for @logoutButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Logout'**
+  String get logoutButton;
+
   /// No description provided for @settingsButton.
   ///
   /// In en, this message translates to:
   /// **'Settings'**
   String get settingsButton;
+
+  /// No description provided for @namaLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get namaLabel;
+
+  /// No description provided for @emailLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get emailLabel;
+
+  /// No description provided for @passwordLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Password'**
+  String get passwordLabel;
+
+  /// No description provided for @confirmPasswordLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm Password'**
+  String get confirmPasswordLabel;
+
+  /// No description provided for @hintNamaLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your name'**
+  String get hintNamaLabel;
+
+  /// No description provided for @hintEmailLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your email'**
+  String get hintEmailLabel;
+
+  /// No description provided for @hintPasswordLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your password'**
+  String get hintPasswordLabel;
+
+  /// No description provided for @hintConfirmPasswordLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm your password'**
+  String get hintConfirmPasswordLabel;
+
+  /// No description provided for @donthaveAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Don\'t have an account?'**
+  String get donthaveAccount;
+
+  /// No description provided for @alreadyHaveAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Already have an account?'**
+  String get alreadyHaveAccount;
+
+  /// No description provided for @errorLogin.
+  ///
+  /// In en, this message translates to:
+  /// **'Login failed, please try again.'**
+  String get errorLogin;
+
+  /// No description provided for @errorRegister.
+  ///
+  /// In en, this message translates to:
+  /// **'Registration failed, please try again.'**
+  String get errorRegister;
+
+  /// No description provided for @namaRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Name is required.'**
+  String get namaRequired;
+
+  /// No description provided for @emailRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Email is required.'**
+  String get emailRequired;
+
+  /// No description provided for @emailInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid email address.'**
+  String get emailInvalid;
+
+  /// No description provided for @passwordRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Password must be at least 8 characters.'**
+  String get passwordRequired;
+
+  /// No description provided for @confirmPasswordRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm password is required.'**
+  String get confirmPasswordRequired;
+
+  /// No description provided for @passwordsDoNotMatch.
+  ///
+  /// In en, this message translates to:
+  /// **'Passwords do not match.'**
+  String get passwordsDoNotMatch;
+
+  /// No description provided for @areYouSure.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to log out?'**
+  String get areYouSure;
+
+  /// No description provided for @ok.
+  ///
+  /// In en, this message translates to:
+  /// **'OK'**
+  String get ok;
+
+  /// No description provided for @cancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cancel;
 }
 
 class _AppLocalizationsDelegate
