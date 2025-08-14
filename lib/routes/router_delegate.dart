@@ -2,7 +2,12 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 // import 'package:story_app/db/auth_repository.dart';
 import 'package:story_app/routes/page_configuration.dart';
+import 'package:story_app/screens/add_story_view.dart';
 import 'package:story_app/screens/auth_view.dart';
+import 'package:story_app/screens/detail_story_view.dart';
+import 'package:story_app/screens/home_view.dart';
+import 'package:story_app/screens/main_app.dart';
+import 'package:story_app/screens/profile_view.dart';
 import 'package:story_app/screens/splash_view.dart';
 
 class AppRouterDelegate extends RouterDelegate<PageConfiguration>
@@ -10,23 +15,11 @@ class AppRouterDelegate extends RouterDelegate<PageConfiguration>
   final GlobalKey<NavigatorState> _navigatorKey = GlobalKey<NavigatorState>();
   PageConfiguration? _currentConfiguration;
   final List<PageConfiguration> _pageStack = [];
-  // final AuthRepository _authRepository;
 
-  // bool? _isLoggedIn;
-
-  // AppRouterDelegate({required AuthRepository authRepository})
-  //   : _authRepository = authRepository {
   AppRouterDelegate() {
     debugPrint('AppRouterDelegate initialized');
     _pageStack.add(SplashPageConfiguration());
-    // _init();
   }
-
-  // void _init() async {
-  // clearAndPush(SplashPageConfiguration());
-  //   _isLoggedIn = await _authRepository.isLoggedIn();
-  //   notifyListeners();
-  // }
 
   @override
   GlobalKey<NavigatorState>? get navigatorKey => _navigatorKey;
@@ -64,7 +57,6 @@ class AppRouterDelegate extends RouterDelegate<PageConfiguration>
 
   @override
   Future<void> setNewRoutePath(PageConfiguration configuration) async {
-    // debugPrint('Setting new route path: ${configuration.pageName}');
     debugPrint('Setting new route path: ${configuration.path}');
 
     clearAndPush(configuration);
@@ -99,10 +91,11 @@ class AppRouterDelegate extends RouterDelegate<PageConfiguration>
   Widget _pageForConfiguration(PageConfiguration config) {
     debugPrint('Building page for configuration: ${config.pageName}');
     switch (config.pageName) {
+      case PageName.main:
+        return MainScreen();
       case PageName.splash:
         return SplashScreen(
           onAuthCheckComplete: (isLoggedIn) {
-            // _isLoggedIn = isLoggedIn;
             if (isLoggedIn) {
               replace(HomePageConfiguration());
             } else {
@@ -111,16 +104,19 @@ class AppRouterDelegate extends RouterDelegate<PageConfiguration>
           },
         );
       case PageName.login:
-        return AuthScreen();
+        return AuthScreen(initialRoute: config.path);
       case PageName.register:
-        return AuthScreen();
-      // case PageName.home:
-      // return HomeScreen();
-      // case PageName.detailStory:
-      //   final detailConfig = config as DetailStoryPageConfiguration;
-      // return StoryDetailScreen(storyId: detailConfig.storyId);
-      // case PageName.addNewStory:
-      // return AddNewStoryScreen();
+        return AuthScreen(initialRoute: config.path);
+      case PageName.home:
+        return HomeScreen();
+      case PageName.detailStory:
+        // final detailConfig = config as DetailStoryPageConfiguration;
+        // return DetailStoryScreen(storyId: detailConfig.storyId);
+        return const DetailStoryScreen();
+      case PageName.addNewStory:
+        return AddStoryScreen();
+      case PageName.profile:
+        return const ProfileScreen();
       default:
         return const Scaffold(body: Center(child: Text('Unknown Page')));
       // return UnknownScreen();

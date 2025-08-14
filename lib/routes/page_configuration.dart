@@ -1,6 +1,15 @@
 import 'package:flutter/foundation.dart';
 
-enum PageName { splash, home, login, register, detailStory, addNewStory }
+enum PageName {
+  main,
+  splash,
+  home,
+  login,
+  register,
+  detailStory,
+  addNewStory,
+  profile,
+}
 
 sealed class PageConfiguration {
   final PageName? pageName;
@@ -13,6 +22,7 @@ sealed class PageConfiguration {
     debugPrint('Parsing route from URI: $uri');
     switch (uri.path) {
       case '/':
+        return MainPageConfiguration();
       case '/splash':
         return SplashPageConfiguration();
       case '/login':
@@ -26,10 +36,20 @@ sealed class PageConfiguration {
         return DetailStoryPageConfiguration(storyId);
       case '/add-new-story':
         return AddNewStoryPageConfiguration();
+      case '/profile':
+        return ProfilePageConfiguration();
       default:
         return UnknownPageConfiguration();
     }
   }
+}
+
+final class MainPageConfiguration extends PageConfiguration {
+  MainPageConfiguration() : super(pageName: PageName.main);
+  bool get isMain => pageName == PageName.main;
+
+  @override
+  String get path => '/';
 }
 
 final class SplashPageConfiguration extends PageConfiguration {
@@ -81,6 +101,15 @@ final class AddNewStoryPageConfiguration extends PageConfiguration {
 
   @override
   String get path => '/add-new-story';
+}
+
+final class ProfilePageConfiguration extends PageConfiguration {
+  ProfilePageConfiguration() : super(pageName: PageName.profile);
+
+  bool get isProfile => pageName == PageName.profile;
+
+  @override
+  String get path => '/profile';
 }
 
 final class UnknownPageConfiguration extends PageConfiguration {

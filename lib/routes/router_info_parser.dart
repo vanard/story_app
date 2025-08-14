@@ -8,9 +8,9 @@ class AppRouteInformationParser
     RouteInformation routeInformation,
   ) async {
     debugPrint('Parsing route information: ${routeInformation.uri}');
-    if (routeInformation.uri.path.isEmpty || routeInformation.uri.path == '/') {
-      return SplashPageConfiguration();
-    }
+    // if (routeInformation.uri.path.isEmpty || routeInformation.uri.path == '/') {
+    //   return SplashPageConfiguration();
+    // }
     return PageConfiguration.fromRoute(routeInformation.uri);
   }
 
