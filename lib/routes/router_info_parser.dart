@@ -7,11 +7,21 @@ class AppRouteInformationParser
   Future<PageConfiguration> parseRouteInformation(
     RouteInformation routeInformation,
   ) async {
-    debugPrint('Parsing route information: ${routeInformation.uri}');
-    // if (routeInformation.uri.path.isEmpty || routeInformation.uri.path == '/') {
+    final uri = routeInformation.uri;
+    final path = uri.path;
+
+    debugPrint('Parsing route information: $uri');
+
+    // if (uri.path.isEmpty || uri.path == '/') {
     //   return SplashPageConfiguration();
     // }
-    return PageConfiguration.fromRoute(routeInformation.uri);
+
+    if (path == '/') {
+      final navIndex = int.tryParse(uri.queryParameters['tab'] ?? '0') ?? 0;
+      return PageConfiguration.mainWithTab(navIndex);
+    }
+
+    return PageConfiguration.fromRoute(uri);
   }
 
   @override

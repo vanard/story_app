@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 
 enum PageName {
   main,
@@ -11,14 +12,18 @@ enum PageName {
   profile,
 }
 
-sealed class PageConfiguration {
+class PageConfiguration {
   final PageName? pageName;
+  final String path;
+  final int? bottomNavIndex;
 
-  String get path;
+  const PageConfiguration({
+    required this.pageName,
+    required this.path,
+    this.bottomNavIndex,
+  });
 
-  const PageConfiguration({this.pageName});
-
-  static PageConfiguration fromRoute(Uri uri) {
+  factory PageConfiguration.fromRoute(Uri uri) {
     debugPrint('Parsing route from URI: $uri');
     switch (uri.path) {
       case '/':
@@ -42,81 +47,53 @@ sealed class PageConfiguration {
         return UnknownPageConfiguration();
     }
   }
+
+  static PageConfiguration mainWithTab(int bottomNavIndex) {
+    return PageConfiguration(
+      pageName: PageName.main,
+      path: '/',
+      bottomNavIndex: bottomNavIndex,
+    );
+  }
 }
 
-final class MainPageConfiguration extends PageConfiguration {
-  MainPageConfiguration() : super(pageName: PageName.main);
-  bool get isMain => pageName == PageName.main;
-
-  @override
-  String get path => '/';
+class MainPageConfiguration extends PageConfiguration {
+  MainPageConfiguration({int? bottomNavIndex})
+    : super(pageName: PageName.main, path: '/', bottomNavIndex: bottomNavIndex ?? 0);
 }
 
 final class SplashPageConfiguration extends PageConfiguration {
-  SplashPageConfiguration() : super(pageName: PageName.splash);
-  bool get isSplash => pageName == PageName.splash;
-
-  @override
-  String get path => '/splash';
+  SplashPageConfiguration() : super(pageName: PageName.splash, path: '/splash');
 }
 
 final class LoginPageConfiguration extends PageConfiguration {
-  LoginPageConfiguration() : super(pageName: PageName.login);
-  bool get isLogin => pageName == PageName.login;
-
-  @override
-  String get path => '/login';
+  LoginPageConfiguration() : super(pageName: PageName.login, path: '/login');
 }
 
 final class RegisterPageConfiguration extends PageConfiguration {
-  RegisterPageConfiguration() : super(pageName: PageName.register);
-  bool get isRegister => pageName == PageName.register;
-
-  @override
-  String get path => '/register';
+  RegisterPageConfiguration()
+    : super(pageName: PageName.register, path: '/register');
 }
 
 final class HomePageConfiguration extends PageConfiguration {
-  HomePageConfiguration() : super(pageName: PageName.home);
-  bool get isHome => pageName == PageName.home;
-
-  @override
-  String get path => '/home';
+  HomePageConfiguration() : super(pageName: PageName.home, path: '/home', bottomNavIndex: 0);
 }
 
 final class DetailStoryPageConfiguration extends PageConfiguration {
   DetailStoryPageConfiguration(this.storyId)
-    : super(pageName: PageName.detailStory);
-  bool get isDetailStory => pageName == PageName.detailStory;
+    : super(pageName: PageName.detailStory, path: '/story/$storyId');
 
   final String storyId;
-
-  @override
-  String get path => '/story/$storyId';
 }
 
 final class AddNewStoryPageConfiguration extends PageConfiguration {
-  AddNewStoryPageConfiguration() : super(pageName: PageName.addNewStory);
-  bool get isAddNewStory => pageName == PageName.addNewStory;
-
-  @override
-  String get path => '/add-new-story';
+  AddNewStoryPageConfiguration() : super(pageName: PageName.addNewStory, path: '/add-new-story', bottomNavIndex: 1);
 }
 
 final class ProfilePageConfiguration extends PageConfiguration {
-  ProfilePageConfiguration() : super(pageName: PageName.profile);
-
-  bool get isProfile => pageName == PageName.profile;
-
-  @override
-  String get path => '/profile';
+  ProfilePageConfiguration() : super(pageName: PageName.profile, path: '/profile', bottomNavIndex: 2);
 }
 
 final class UnknownPageConfiguration extends PageConfiguration {
-  UnknownPageConfiguration() : super(pageName: null);
-
-  bool get isUnknown => pageName == null;
-
-  @override
-  String get path => '/unknown';
+  UnknownPageConfiguration() : super(pageName: null, path: '/unknown');
 }

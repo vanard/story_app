@@ -28,6 +28,9 @@ class AppRouterDelegate extends RouterDelegate<PageConfiguration>
   PageConfiguration? get currentConfiguration => _currentConfiguration;
 
   void push(PageConfiguration configuration) {
+    if(configuration.bottomNavIndex != null && _pageStack.last.pageName == PageName.main) {
+      _pageStack.removeLast();
+    }
     _pageStack.add(configuration);
     _currentConfiguration = configuration;
     notifyListeners();
@@ -55,6 +58,11 @@ class AppRouterDelegate extends RouterDelegate<PageConfiguration>
     push(configuration);
   }
 
+    void navigateToTab(int index) {
+    final newConfig = PageConfiguration.mainWithTab(index);
+    push(newConfig);
+  }
+
   @override
   Future<void> setNewRoutePath(PageConfiguration configuration) async {
     debugPrint('Setting new route path: ${configuration.path}');
@@ -71,13 +79,15 @@ class AppRouterDelegate extends RouterDelegate<PageConfiguration>
     return Navigator(
       key: navigatorKey,
       pages: _pageStack.map((config) => _buildPage(config)).toList(),
-      // pages: _pageStack.map((config) {
-      //   debugPrint('Building page stack: ${config.pageName}');
-      //   return _buildPage(config);
-      // }).toList(),
       onDidRemovePage: (page) {
         debugPrint('Page removed: ${page.key}');
+        // pop();
       },
+      // onPopPage: (route, result) {
+      //   if (!route.didPop(result)) return false;
+      //   pop();
+      //   return true;
+      // },
     );
   }
 
@@ -92,12 +102,12 @@ class AppRouterDelegate extends RouterDelegate<PageConfiguration>
     debugPrint('Building page for configuration: ${config.pageName}');
     switch (config.pageName) {
       case PageName.main:
-        return MainScreen();
+        return MainScreen(initialNavIndex: config.bottomNavIndex ?? 0, onNavTap: navigateToTab);
       case PageName.splash:
         return SplashScreen(
           onAuthCheckComplete: (isLoggedIn) {
             if (isLoggedIn) {
-              replace(HomePageConfiguration());
+              replace(MainPageConfiguration());
             } else {
               replace(LoginPageConfiguration());
             }

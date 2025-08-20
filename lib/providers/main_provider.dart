@@ -4,8 +4,10 @@ class MainProvider extends ChangeNotifier {
   int _selectedNavigationIndex = 0;
   int get selectedNavigationIndex => _selectedNavigationIndex;
 
-  void onNavigationTap(int index) {
+  void onNavigationTap(int index, {bool notify = true}) {
     _selectedNavigationIndex = index;
-    notifyListeners();
+    if (notify) {
+      notifyListeners();
+    }
   }
 }

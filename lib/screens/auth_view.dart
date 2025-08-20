@@ -22,7 +22,7 @@ class _AuthScreenState extends State<AuthScreen> {
   String _email = '';
   String _password = '';
 
-  late final _authProvider;
+  late final AuthProvider _authProvider;
   bool? _lastLoginMode;
 
   @override
@@ -92,7 +92,7 @@ class _AuthScreenState extends State<AuthScreen> {
     }
 
     if (currentIsloggedIn) {
-      context.replaceWith(HomePageConfiguration());
+      context.replaceWith(MainPageConfiguration());
     }
   }
 

@@ -16,7 +16,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  late final _authProvider;
+  late final AuthProvider _authProvider;
 
   @override
   void initState() {
@@ -86,21 +86,6 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
       body:
-          // Column(
-          //   mainAxisSize: MainAxisSize.max,
-          //   children: [
-          //     Text('Welcome to the Home Screen!'),
-          //     Expanded(
-          //       child: ListView.builder(
-          //         itemBuilder: (context, index) {
-          //           final story = storyProvider.listStory?[index];
-          //           return StoryItem(story: story!);
-          //         },
-          //         itemCount: storyProvider.listStory?.length ?? 0,
-          //       ),
-          //     ),
-          //   ],
-          // ),
           ListView.builder(
             itemBuilder: (context, index) {
               final story = storyProvider.listStory?[index];
