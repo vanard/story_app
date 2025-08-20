@@ -24,5 +24,14 @@
   "passwordsDoNotMatch": "Kata sandi tidak cocok.",
   "areYouSure": "Apakah Anda yakin ingin keluar?",
   "ok": "OK",
-  "cancel": "Batalkan"
+  "cancel": "Batalkan",
+  "addStory": "Tambah Cerita",
+  "detailStory": "Detail Cerita",
+  "upload": "Unggah",
+  "description": "Deskripsi",
+  "camera": "Kamera",
+  "gallery": "Galeri",
+  "descriptionRequired": "Deskripsi tidak boleh kosong.",
+  "imageRequired": "Perlu memilih gambar.",
+  "storyAdded": "Cerita berhasil ditambahkan."
 }

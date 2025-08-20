@@ -253,6 +253,60 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Cancel'**
   String get cancel;
+
+  /// No description provided for @addStory.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Story'**
+  String get addStory;
+
+  /// No description provided for @detailStory.
+  ///
+  /// In en, this message translates to:
+  /// **'Detail Story'**
+  String get detailStory;
+
+  /// No description provided for @upload.
+  ///
+  /// In en, this message translates to:
+  /// **'Upload'**
+  String get upload;
+
+  /// No description provided for @description.
+  ///
+  /// In en, this message translates to:
+  /// **'Description'**
+  String get description;
+
+  /// No description provided for @camera.
+  ///
+  /// In en, this message translates to:
+  /// **'Camera'**
+  String get camera;
+
+  /// No description provided for @gallery.
+  ///
+  /// In en, this message translates to:
+  /// **'Gallery'**
+  String get gallery;
+
+  /// No description provided for @descriptionRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Description must not be empty.'**
+  String get descriptionRequired;
+
+  /// No description provided for @imageRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Need to pick an image.'**
+  String get imageRequired;
+
+  /// No description provided for @storyAdded.
+  ///
+  /// In en, this message translates to:
+  /// **'Story added successfully.'**
+  String get storyAdded;
 }
 
 class _AppLocalizationsDelegate

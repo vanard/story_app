@@ -85,4 +85,31 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get cancel => 'Batalkan';
+
+  @override
+  String get addStory => 'Tambah Cerita';
+
+  @override
+  String get detailStory => 'Detail Cerita';
+
+  @override
+  String get upload => 'Unggah';
+
+  @override
+  String get description => 'Deskripsi';
+
+  @override
+  String get camera => 'Kamera';
+
+  @override
+  String get gallery => 'Galeri';
+
+  @override
+  String get descriptionRequired => 'Deskripsi tidak boleh kosong.';
+
+  @override
+  String get imageRequired => 'Perlu memilih gambar.';
+
+  @override
+  String get storyAdded => 'Cerita berhasil ditambahkan.';
 }

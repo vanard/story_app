@@ -24,5 +24,14 @@
   "passwordsDoNotMatch": "Passwords do not match.",
   "areYouSure": "Are you sure you want to log out?",
   "ok": "OK",
-  "cancel": "Cancel"
+  "cancel": "Cancel",
+  "addStory": "Add Story",
+  "detailStory": "Detail Story",
+  "upload": "Upload",
+  "description": "Description",
+  "camera": "Camera",
+  "gallery": "Gallery",
+  "descriptionRequired": "Description must not be empty.",
+  "imageRequired": "Need to pick an image.",
+  "storyAdded": "Story added successfully."
 }

@@ -85,4 +85,31 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get cancel => 'Cancel';
+
+  @override
+  String get addStory => 'Add Story';
+
+  @override
+  String get detailStory => 'Detail Story';
+
+  @override
+  String get upload => 'Upload';
+
+  @override
+  String get description => 'Description';
+
+  @override
+  String get camera => 'Camera';
+
+  @override
+  String get gallery => 'Gallery';
+
+  @override
+  String get descriptionRequired => 'Description must not be empty.';
+
+  @override
+  String get imageRequired => 'Need to pick an image.';
+
+  @override
+  String get storyAdded => 'Story added successfully.';
 }
