@@ -65,17 +65,20 @@ class ApiService {
     }
   }
 
-  Future<Map<String, dynamic>> addNewStory(File image, String token) async {
-    final req = http.MultipartRequest('POST', Uri.parse('$_baseUrl/login'));
+  Future<Map<String, dynamic>> addNewStory(File image, String description, String token) async {
+    debugPrint('image path story: ${image.path}');
+
+    final req = http.MultipartRequest('POST', Uri.parse('$_baseUrl/stories'));
     Map<String, String> headers = {
       "Authorization": "Bearer $token",
       "Content-type": "multipart/form-data",
     };
-    // req.headers['Authorization'] = 'Bearer $token';
+    
     req.headers.addAll(headers);
+    req.fields['description'] = description;
     req.files.add(
       await http.MultipartFile.fromPath(
-        'stories',
+        'photo',
         image.path,
         filename: image.path.split('/').last,
       ),
