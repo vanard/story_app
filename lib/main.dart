@@ -4,6 +4,7 @@ import 'package:story_app/db/auth_repository.dart';
 import 'package:story_app/l10n/app_localizations.dart';
 import 'package:story_app/providers/auth_provider.dart';
 import 'package:story_app/providers/main_provider.dart';
+import 'package:story_app/providers/overlay_provider.dart';
 import 'package:story_app/providers/stories_provider.dart';
 import 'package:story_app/routes/router_delegate.dart';
 import 'package:story_app/routes/router_info_parser.dart';
@@ -31,7 +32,6 @@ class _MyAppState extends State<MyApp> {
   late final AppRouteInformationParser _appRouteInformationParser;
   late final AuthProvider _authProvider;
   late final StoriesProvider _storiesProvider;
-  late final MainProvider _mainProvider;
 
   @override
   void initState() {
@@ -40,9 +40,8 @@ class _MyAppState extends State<MyApp> {
     final authRepository = AuthRepository(service: apiService);
     _authProvider = AuthProvider(authRepository: authRepository);
     _storiesProvider = StoriesProvider(service: apiService);
-    _mainProvider = MainProvider();
 
-    _appRouterDelegate = AppRouterDelegate(mainProvider: _mainProvider);
+    _appRouterDelegate = AppRouterDelegate();
     _appRouteInformationParser = AppRouteInformationParser();
   }
 
@@ -60,7 +59,8 @@ class _MyAppState extends State<MyApp> {
           create: (context) => _authProvider,
         ),
         ChangeNotifierProvider(create: (context) => _storiesProvider),
-        ChangeNotifierProvider(create: (context) => _mainProvider),
+        ChangeNotifierProvider(create: (context) => MainProvider()),
+        ChangeNotifierProvider(create: (context) => OverlayProvider()),
       ],
       child: MaterialApp.router(
         theme: lightTheme.copyWith(

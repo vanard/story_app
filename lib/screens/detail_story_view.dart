@@ -12,7 +12,7 @@ class DetailStoryScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<StoriesProvider>(context, listen: false);
+    final provider = context.read<StoriesProvider>();
     final story = provider.getStoryById(storyId);
     final datePost = DateFormatter().formatDate(story.createdAt.toLocal());
 

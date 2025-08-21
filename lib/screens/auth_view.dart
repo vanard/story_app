@@ -28,7 +28,7 @@ class _AuthScreenState extends State<AuthScreen> {
   @override
   void initState() {
     super.initState();
-    _authProvider = Provider.of<AuthProvider>(context, listen: false);
+    _authProvider = context.read<AuthProvider>();
     debugPrint('Initial route: ${widget.initialRoute}');
     if ((!_authProvider.isLoginMode && widget.initialRoute == '/login') ||
         (_authProvider.isLoginMode && widget.initialRoute == '/register')) {
