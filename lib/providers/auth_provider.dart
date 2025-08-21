@@ -29,12 +29,6 @@ class AuthProvider extends ChangeNotifier {
     notifyListeners();
     try {
       _isLoggedIn = await _authRepository.isLoggedIn();
-      // if (_isLoggedIn) {
-      //   final loginUser = await _authRepository.getLoginUser();
-      //   if (loginUser != null) {
-      //     // Handle the logged-in user
-      //   }
-      // }
       debugPrint('Is logged in: $_isLoggedIn');
     } catch (e) {
       _errorMessage = e.toString().split('Exception:').last.trim();
@@ -52,12 +46,6 @@ class AuthProvider extends ChangeNotifier {
     notifyListeners();
     try {
       _isLoggedIn = await _authRepository.login(email, password);
-      // if (_isLoggedIn) {
-      //   final loginUser = await _authRepository.getLoginUser();
-      //   if (loginUser != null) {
-      //     await _authRepository.saveLoginUser(loginUser);
-      //   }
-      // }
       debugPrint('Login successful: $_isLoggedIn');
     } catch (e) {
       _errorMessage = e.toString().split('Exception:').last.trim();
@@ -72,14 +60,12 @@ class AuthProvider extends ChangeNotifier {
     _isLoading = true;
     notifyListeners();
     try {
-      // final result = 
       await _authRepository.register(
         name,
         email,
         password,
       ); 
       debugPrint('Registration successful');
-      // _isLoginMode = true; // Switch to login mode after registration
     } catch (e) {
       _errorMessage = e.toString().split('Exception:').last.trim();
       debugPrint('Error during registration: $_errorMessage');
@@ -93,8 +79,12 @@ class AuthProvider extends ChangeNotifier {
     _isLoading = true;
     notifyListeners();
     try {
-      _isLoggedIn = await _authRepository.logout();
-      debugPrint('Logout successful: $_isLoggedIn');
+      final result = await _authRepository.logout();
+      if(result) {
+        _isLoggedIn = false;
+        _loginUser = null;
+      } 
+      debugPrint('Logout successful: $_isLoggedIn $_loginUser');
     } catch (e) {
       _errorMessage = e.toString().split('Exception:').last.trim();
       debugPrint('Error during logout: $_errorMessage');
