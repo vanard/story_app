@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:story_app/models/response.dart';
-import 'package:story_app/static_constant.dart';
+import 'package:story_app/util/static_constant.dart';
 
 Exception handleError(int statusCode, BaseResponse response) {
   debugPrint('Error: ${response.message} (Status code: $statusCode)');

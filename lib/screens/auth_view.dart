@@ -33,7 +33,6 @@ class _AuthScreenState extends State<AuthScreen> {
     if ((!_authProvider.isLoginMode && widget.initialRoute == '/login') ||
         (_authProvider.isLoginMode && widget.initialRoute == '/register')) {
       _authProvider.toggleLoginMode();
-      // _formKey.currentState?.reset();
     }
 
     _authProvider.addListener(_onAuthModeChanged);
@@ -92,7 +91,7 @@ class _AuthScreenState extends State<AuthScreen> {
     }
 
     if (currentIsloggedIn) {
-      context.replaceWith(MainPageConfiguration());
+      context.replaceWith(MainPageConfiguration(bottomNavIndex: 0));
     }
   }
 
@@ -129,6 +128,9 @@ class _AuthScreenState extends State<AuthScreen> {
                         appLocalizations.hintNamaLabel,
                       ),
                       keyboardType: TextInputType.name,
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.onSurface,
+                      ),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return appLocalizations.namaRequired;
@@ -146,6 +148,9 @@ class _AuthScreenState extends State<AuthScreen> {
                       appLocalizations.hintEmailLabel,
                     ),
                     keyboardType: TextInputType.emailAddress,
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.onSurface,
+                    ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return appLocalizations.emailRequired;
@@ -169,6 +174,9 @@ class _AuthScreenState extends State<AuthScreen> {
                     ),
                     keyboardType: TextInputType.visiblePassword,
                     obscureText: true,
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.onSurface,
+                    ),
                     validator: (value) {
                       if (value == null || value.length < 8) {
                         return appLocalizations.passwordRequired;
@@ -188,6 +196,9 @@ class _AuthScreenState extends State<AuthScreen> {
                       ),
                       keyboardType: TextInputType.visiblePassword,
                       obscureText: true,
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.onSurface,
+                      ),
                       validator: (value) {
                         if (value == null || value != passController.text) {
                           return appLocalizations.confirmPasswordRequired;
@@ -208,7 +219,10 @@ class _AuthScreenState extends State<AuthScreen> {
                     ),
                     onPressed: provider.isLoading ? () {} : _submit,
                     child: provider.isLoading
-                        ? const CircularProgressIndicator()
+                        ? const Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: CircularProgressIndicator(),
+                          )
                         : Text(
                             provider.isLoginMode
                                 ? appLocalizations.loginButton
