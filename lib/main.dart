@@ -31,6 +31,7 @@ class _MyAppState extends State<MyApp> {
   late final AppRouteInformationParser _appRouteInformationParser;
   late final AuthProvider _authProvider;
   late final StoriesProvider _storiesProvider;
+  late final MainProvider _mainProvider;
 
   @override
   void initState() {
@@ -39,9 +40,9 @@ class _MyAppState extends State<MyApp> {
     final authRepository = AuthRepository(service: apiService);
     _authProvider = AuthProvider(authRepository: authRepository);
     _storiesProvider = StoriesProvider(service: apiService);
+    _mainProvider = MainProvider();
 
-    // _appRouterDelegate = AppRouterDelegate(authRepository: authRepository);
-    _appRouterDelegate = AppRouterDelegate();
+    _appRouterDelegate = AppRouterDelegate(mainProvider: _mainProvider);
     _appRouteInformationParser = AppRouteInformationParser();
   }
 
@@ -55,16 +56,11 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        // Provider(create: (_) => ApiService()),
-        // Provider(create: (_) => AuthRepository(service: ApiService())),
         ChangeNotifierProvider(
-          // create: (context) => AuthProvider(
-          //   authRepository: Provider.of<AuthRepository>(context, listen: false),
-          // ),
           create: (context) => _authProvider,
         ),
         ChangeNotifierProvider(create: (context) => _storiesProvider),
-        ChangeNotifierProvider(create: (context) => MainProvider()),
+        ChangeNotifierProvider(create: (context) => _mainProvider),
       ],
       child: MaterialApp.router(
         theme: lightTheme.copyWith(

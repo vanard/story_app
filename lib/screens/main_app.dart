@@ -25,6 +25,15 @@ class _MainScreenState extends State<MainScreen> {
     _provider.onNavigationTap(widget.initialNavIndex, notify: false);
   }
 
+  @override
+  void didUpdateWidget(MainScreen oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.initialNavIndex != oldWidget.initialNavIndex) {
+      final provider = Provider.of<MainProvider>(context, listen: false);
+      provider.setNavigationIndex(widget.initialNavIndex);
+    }
+  }
+
   void _onNavItemTapped(int index) {
     _provider.onNavigationTap(index);
     widget.onNavTap(index);

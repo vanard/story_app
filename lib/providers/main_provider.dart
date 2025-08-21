@@ -10,4 +10,11 @@ class MainProvider extends ChangeNotifier {
       notifyListeners();
     }
   }
+
+  void setNavigationIndex(int index) {
+    if (_selectedNavigationIndex != index) {
+      _selectedNavigationIndex = index;
+      notifyListeners();
+    }
+  }
 }

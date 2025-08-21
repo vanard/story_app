@@ -12,13 +12,10 @@ class AppRouteInformationParser
 
     debugPrint('Parsing route information: $uri');
 
-    // if (uri.path.isEmpty || uri.path == '/') {
-    //   return SplashPageConfiguration();
-    // }
 
-    if (path == '/') {
+    if (path == '/main') {
       final navIndex = int.tryParse(uri.queryParameters['tab'] ?? '0') ?? 0;
-      return PageConfiguration.mainWithTab(navIndex);
+      return MainPageConfiguration(bottomNavIndex: navIndex);
     }
 
     return PageConfiguration.fromRoute(uri);
@@ -26,6 +23,15 @@ class AppRouteInformationParser
 
   @override
   RouteInformation? restoreRouteInformation(PageConfiguration configuration) {
+    if (configuration.pageName == PageName.main) {
+      final uri = Uri.parse('/main').replace(
+        queryParameters: {
+          'tab': configuration.bottomNavIndex?.toString() ?? '0',
+        },
+      );
+      return RouteInformation(uri: uri);
+    }
+
     final uri = Uri.parse(configuration.path);
     debugPrint('Restoring route information: $uri');
     return RouteInformation(uri: uri);
