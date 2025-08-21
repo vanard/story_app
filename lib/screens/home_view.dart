@@ -3,10 +3,12 @@ import 'package:provider/provider.dart';
 import 'package:story_app/l10n/app_localizations.dart';
 import 'package:story_app/models/story.dart';
 import 'package:story_app/providers/auth_provider.dart';
+import 'package:story_app/providers/overlay_provider.dart';
 import 'package:story_app/providers/stories_provider.dart';
 import 'package:story_app/routes/page_configuration.dart';
 import 'package:story_app/routes/router_helper.dart';
 import 'package:story_app/screens/widgets/story_item.dart';
+import 'package:story_app/util/constants.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -21,8 +23,8 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    _authProvider = Provider.of<AuthProvider>(context, listen: false);
-    final storyProvider = Provider.of<StoriesProvider>(context, listen: false);
+    _authProvider = context.read<AuthProvider>();
+    final storyProvider = context.read<StoriesProvider>();
     _authProvider
         .getLoginUser()
         .then((_) async {
@@ -34,44 +36,6 @@ class _HomeScreenState extends State<HomeScreen> {
         .catchError((error) {
           debugPrint('Error fetching user: $error');
         });
-  }
-
-  void _logout() async {
-    await _authProvider.logout();
-    if (!mounted) return;
-    context.clearAndPushTo(LoginPageConfiguration());
-  }
-
-  void _showLogoutDialog() {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: Text(
-            AppLocalizations.of(context)!.logoutButton,
-            style: TextStyle().copyWith(
-              color: Theme.of(context).colorScheme.onSurface,
-            ),
-          ),
-          content: Text(
-            AppLocalizations.of(context)!.areYouSure,
-            style: TextStyle().copyWith(
-              color: Theme.of(context).colorScheme.onSurface,
-            ),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(context).pop(),
-              child: Text(AppLocalizations.of(context)!.cancel),
-            ),
-            TextButton(
-              onPressed: _logout,
-              child: Text(AppLocalizations.of(context)!.logoutButton),
-            ),
-          ],
-        );
-      },
-    );
   }
 
   void _onTapItem(Story story) {
@@ -89,7 +53,7 @@ class _HomeScreenState extends State<HomeScreen> {
         actions: [
           IconButton(
             onPressed: () {
-              _showLogoutDialog();
+              context.read<OverlayProvider>().showOverlay(OverlayType.dialog, confirmLogout);
             },
             icon: Icon(Icons.exit_to_app),
           ),

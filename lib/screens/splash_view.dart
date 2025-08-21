@@ -21,10 +21,7 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   Future<void> _checkAuthStatus() async {
-    final isLoggedIn = await Provider.of<AuthProvider>(
-      context,
-      listen: false,
-    ).checkLoginStatus();
+    final isLoggedIn = await context.read<AuthProvider>().checkLoginStatus();
     if (widget.onAuthCheckComplete != null) {
       widget.onAuthCheckComplete!(isLoggedIn);
     }

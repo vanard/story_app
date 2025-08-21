@@ -2,12 +2,14 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:story_app/l10n/app_localizations.dart';
 import 'package:story_app/providers/auth_provider.dart';
+import 'package:story_app/providers/overlay_provider.dart';
 import 'package:story_app/providers/stories_provider.dart';
+import 'package:story_app/routes/page_configuration.dart';
 import 'package:story_app/routes/router_helper.dart';
+import 'package:story_app/util/constants.dart';
 
 class AddStoryScreen extends StatefulWidget {
   const AddStoryScreen({super.key});
@@ -17,55 +19,13 @@ class AddStoryScreen extends StatefulWidget {
 }
 
 class _AddStoryScreenState extends State<AddStoryScreen> {
-  final ImagePicker _imagePicker = ImagePicker();
-  late final _provider = Provider.of<StoriesProvider>(context, listen: false);
+  late final StoriesProvider _provider;
   final _descriptionController = TextEditingController();
 
-  void _openImagePicker() {
-    debugPrint('Open image picker');
-    showModalBottomSheet(
-      context: context,
-      builder: (context) => SafeArea(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            ListTile(
-              leading: const Icon(Iconsax.gallery),
-              title: Text(AppLocalizations.of(context)!.gallery),
-              onTap: () {
-                Navigator.pop(context);
-                _pickImage(ImageSource.gallery);
-              },
-            ),
-            ListTile(
-              leading: const Icon(Iconsax.camera),
-              title: Text(AppLocalizations.of(context)!.camera),
-              onTap: () {
-                Navigator.pop(context);
-                _pickImage(ImageSource.camera);
-              },
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  void _pickImage(ImageSource source) {
-    debugPrint('Pick image from gallery');
-    _imagePicker
-        .pickImage(source: source)
-        .then((image) {
-          if (image != null) {
-            _provider.setSelectedImage(File(image.path));
-            _provider.getImageFileSize(image.path);
-          }
-        })
-        .catchError((error) {
-          debugPrint('Error picking image: $error');
-          if (!mounted) return;
-          _showMessage('Error picking image: $error');
-        });
+  @override
+  void initState() {
+    super.initState();
+    _provider = context.read<StoriesProvider>();
   }
 
   void _submitStory() async {
@@ -81,7 +41,7 @@ class _AddStoryScreenState extends State<AddStoryScreen> {
       return;
     }
 
-    final authProvider = Provider.of<AuthProvider>(context, listen: false);
+    final authProvider = context.read<AuthProvider>();
     final token = authProvider.loginUser?.token ?? '';
 
     debugPrint('current token: $token');
@@ -119,7 +79,7 @@ class _AddStoryScreenState extends State<AddStoryScreen> {
     final appLocalizations = AppLocalizations.of(context)!;
     return Scaffold(
       appBar: AppBar(title: Text(appLocalizations.addStory)),
-      body: Padding(
+      body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -128,12 +88,22 @@ class _AddStoryScreenState extends State<AddStoryScreen> {
             if (provider.selectedImage == null)
               IconButton(
                 icon: Icon(Iconsax.add),
-                iconSize: 200,
-                onPressed: _openImagePicker,
+                iconSize: 180,
+                onPressed: () {
+                  context.read<OverlayProvider>().showOverlay(
+                    OverlayType.bottomSheet,
+                    chooseImagePicker,
+                  );
+                },
               )
             else
               GestureDetector(
-                onTap: _openImagePicker,
+                onTap: () {
+                  context.read<OverlayProvider>().showOverlay(
+                    OverlayType.bottomSheet,
+                    chooseImagePicker,
+                  );
+                },
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(16.0),
                   child: Image.file(

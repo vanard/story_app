@@ -21,7 +21,7 @@ class _MainScreenState extends State<MainScreen> {
   @override
   void initState() {
     super.initState();
-    _provider = Provider.of<MainProvider>(context, listen: false);
+    _provider = context.read<MainProvider>();
     _provider.onNavigationTap(widget.initialNavIndex, notify: false);
   }
 
@@ -29,8 +29,8 @@ class _MainScreenState extends State<MainScreen> {
   void didUpdateWidget(MainScreen oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.initialNavIndex != oldWidget.initialNavIndex) {
-      final provider = Provider.of<MainProvider>(context, listen: false);
-      provider.setNavigationIndex(widget.initialNavIndex);
+      // final provider = Provider.of<MainProvider>(context, listen: false);
+      _provider.setNavigationIndex(widget.initialNavIndex);
     }
   }
 
